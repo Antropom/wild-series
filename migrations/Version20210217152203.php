@@ -30,4 +30,9 @@ final class Version20210217152203 extends AbstractMigration
         $this->addSql('DROP TABLE category');
         $this->addSql('ALTER TABLE program DROP summary, DROP poster, CHANGE title name VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8mb4_unicode_ci`');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }
