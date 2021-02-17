@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Program;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,28 +19,34 @@ class ProgramController extends AbstractController
      */
     public function index(): Response
     {
+        $programs = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findAll();
         return $this->render('program/index.html.twig', [
-            'website' => 'Wild Series'
+            'programs' => $programs
         ]);
     }
 
     /**
      * @Route("/{id}", methods={"GET"}, requirements={"id"="\d+"}, name="show")
+     * @param int $id
      * @return Response
      */
     public function show(int $id): Response
     {
+        $program = $this->getDoctrine()
+            ->getRepository(Program::class)
+            ->findOneBy(['id' => $id]);
+
+        if (!$program) {
+            throw $this->createNotFoundException(
+                'No program with id : '.$id.' found in program\'s table.'
+            );
+        }
+
         return $this->render('program/show.html.twig', [
-            'id' => $id
+            'program' => $program
         ]);
     }
 
-    /**
-     * @Route("/{slug}",  name="not_found")
-     * @return NotFoundHttpException
-     */
-    public function not_found(): NotFoundHttpException
-    {
-        throw $this->createNotFoundException('Serie not found');
-    }
 }
