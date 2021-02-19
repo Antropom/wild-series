@@ -42,7 +42,7 @@ class Category
     }
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="App\Entity\Program", mappedBy="category")
      */
     private $programs;
 
