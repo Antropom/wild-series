@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Ajouter une série
+{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form.title) }}
+    {{ form_widget(form.summary) }}
+    {{ form_widget(form.poster) }}
+    {{ form_widget(form.category) }}
+    <input type="submit" value="Add program">
+    {{ form_end(form) }}
+{% endblock %}
+
+

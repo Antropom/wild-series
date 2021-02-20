@@ -6,7 +6,10 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Program;
+use App\Form\CategoryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -32,22 +35,34 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/{name}", methods={"GET"}, name="show")
-     * @param $name
+     * @Route("/new", name="new")
+     * @param Request $request
      * @return Response
      */
-    public function show(string $name): Response
+    public function new(Request $request) : Response
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name' => $name]);
-
-        if (!$category) {
-            throw $this->createNotFoundException(
-                'No category with the name : ' . $name . ' found in category\'s table.'
-            );
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($category);
+            $entityManager->flush();
+            return $this->redirectToRoute('category_index');
         }
+        return $this->render('category/new.html.twig', [
+            "form" => $form->createView()
+        ]);
+    }
 
+    /**
+     * @Route("/{category_name}", methods={"GET"}, name="show")
+     * @ParamConverter("category", class="App\Entity\Category", options={"mapping": {"category_name": "name"}})
+     * @param Category $category
+     * @return Response
+     */
+    public function show(Category $category): Response
+    {
         $programs = $this->getDoctrine()
             ->getRepository(Program::class)
             ->findBy(
@@ -67,4 +82,5 @@ class CategoryController extends AbstractController
             'programs' => $programs
         ]);
     }
+
 }

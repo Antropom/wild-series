@@ -7,10 +7,11 @@
     {% for category in categories %}
         <div>
             <h2>{{ category.name }}</h2>
-            <a href="{{ path("category_show", { name: category.name }) }}">Voir la fiche</a>
+            <a href="{{ path("category_show", { "category_name": category.name }) }}">Voir la fiche</a>
         </div>
     {% else %}
         Aucune série trouvée.
     {% endfor %}
+    <a href="{{ path('category_new') }}">Ajouter une catégorie</a>
     <a href="{{ path('app_index') }}">Retour à l'accueil</a>
 {% endblock %}
