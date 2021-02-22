@@ -19,7 +19,6 @@ class Program
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Assert\NotBlank(message="Merci de bien vouloir saisir des données")
      */
     private int $id;
 
@@ -33,6 +32,11 @@ class Program
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank(message="Merci de bien vouloir saisir des données")
+     * @Assert\Regex(
+     *     pattern="/plus belle la vie/",
+     *     match=false,
+     *     message="On parle de vraies séries ici !"
+     * )
      */
     private string $summary;
 
