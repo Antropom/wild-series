@@ -4,27 +4,28 @@
 
 {% block body %}
 
-    <div class="media">
-        <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
-        <div class="media-body">
-            <h1 class="mt-0">{{ program.title }}</h1>
-            <p>{{ program.summary }}</p>
-            <p>Catégorie : {{ program.category.name }}</p>
-            <strong>Acteurs :</strong>
-            <ul>
-                {% for actor in program.actors %}
-                    <li>{{ actor.name }}</li>
-                {% else %}
-                    <li>Aucun acteur pour cette série</li>
-                {% endfor %}
-            </ul>
-            {% for season in seasons %}
-                <a href="{{ path('program_season_show', {"program": program.id, "season": season.id}) }}">Saison {{ season.number }}
-                    ({{ season.year }})</a>
+<div class="media">
+    <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
+    <div class="media-body">
+        <h1 class="mt-0">{{ program.title }}</h1>
+        <p>{{ program.summary }}</p>
+        <p>Catégorie : {{ program.category.name }}</p>
+        <strong>Acteurs :</strong>
+        <ul>
+            {% for actor in program.actors %}
+                <li>{{ actor.name }}</li>
+            {% else %}
+                <li>Aucun acteur pour cette série</li>
             {% endfor %}
-        </div>
+        </ul>
+        {% for season in seasons %}
+            <a href="{{ path('program_season_show', {"program": program.id, "season": season.id}) }}">Saison {{ season.number }}
+                ({{ season.year }})</a>
+        {% endfor %}
     </div>
+</div>
 
+<a href="{{ path('program_edit', {id: program.id}) }}">Modifier</a>
     <a href="{{ path('program_index') }}">
         Retour à la liste des programmes
     </a>

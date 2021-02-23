@@ -96,16 +96,43 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    /*
-     * @Route("/{program_id}/comment/{comment_id}", name="show_comment")
-     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program_id": "id"}})
-     * @ParamConverter("comment", class="App\Entity\Comment", options={"mapping": {"comment_id": "id}})
-     public function showProgrammComment(Program $program, Comment $comment): Response
-     {
-         return $this->render('comment.html.twig', [
-             'program' => $program,
-             'comment' => $comment
-         ]);
-     }
+    /**
+     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"})
+     * @param Request $request
+     * @param Program $program
+     * @return Response
      */
+    public function edit(Request $request, Program $program): Response
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Program $program
+     * @return Response
+     */
+    public function delete(Request $request, Program $program): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$program->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($program);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_index');
+    }
 }
