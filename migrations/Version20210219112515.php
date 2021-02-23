@@ -33,4 +33,9 @@ final class Version20210219112515 extends AbstractMigration
         $this->addSql('DROP TABLE episode');
         $this->addSql('DROP TABLE season');
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }
