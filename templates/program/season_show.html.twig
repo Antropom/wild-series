@@ -11,6 +11,8 @@
             <p>{{ episode.synopsis }}</p>
             <a href="{{ path('program_episode_show', {"program": program.id, "season": season.id, "episode": episode.id}) }}">Voir
                 l'épisode</a>
+        {% else %}
+            <h2>Aucun épisode pour cette série</h2>
         {% endfor %}
     </div>
 {% endblock %}
