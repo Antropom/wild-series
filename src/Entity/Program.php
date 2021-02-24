@@ -43,7 +43,7 @@ class Program
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private string $poster;
+    private ?string $poster;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="programs")
