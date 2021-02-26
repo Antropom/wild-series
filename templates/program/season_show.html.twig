@@ -9,7 +9,7 @@
         {% for episode in episodes %}
             <h2>Épisode {{ episode.number }} : {{ episode.title }}</h2>
             <p>{{ episode.synopsis }}</p>
-            <a href="{{ path('program_episode_show', {"program": program.id, "season": season.id, "episode": episode.id}) }}">Voir
+            <a href="{{ path('program_episode_show', {"program_slug": program.slug, "season": season.id, "episode_slug": episode.slug}) }}">Voir
                 l'épisode</a>
         {% else %}
             <h2>Aucun épisode pour cette série</h2>
