@@ -7,7 +7,23 @@
         <h1>{{ program.title }}, saison {{ season.number }} épisode {{ episode.number }}</h1>
         <h2>{{ episode.title }}</h2>
         <p>{{ episode.synopsis }}</p>
+        {% if episode.comments %}
+        <ul>
+            {% for comment in episode.comments %}
+            <li>
+                <p>{{ comment.comment }}</p>
+                <p>{{ comment.rate }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
+    {% if app.user %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Save') }}</button>
+        {{ form_end(form) }}
+    {% endif %}
 {% endblock %}
 
 
