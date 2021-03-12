@@ -190,4 +190,32 @@ class ProgramController extends AbstractController
 
         return $this->redirectToRoute('program_index');
     }
+
+    /**
+     * @Route("/{program_slug}/season/{season}/episode/{episode_slug}/{comment}", name="delete_comment", methods={"DELETE"})
+     * @ParamConverter("program", options={"mapping": {"program_slug": "slug"}})
+     * @ParamConverter("season", options={"mapping": {"season": "id"}})
+     * @ParamConverter("episode", options={"mapping": {"episode_slug": "slug"}})
+     * @ParamConverter("comment", options={"mapping": {"comment": "id"}})
+     * @param Program $program
+     * @param Season $season
+     * @param Episode $episode
+     * @param Comment $comment
+     * @param Request $request
+     * @return Response
+     */
+    public function deleteComment(Request $request, Program $program, Season $season, Episode $episode, Comment $comment): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_episode_show', [
+            "program_slug" => $program->getSlug(),
+            "season" => $season->getId(),
+            "episode_slug" => $episode->getSlug()
+        ]);
+    }
 }

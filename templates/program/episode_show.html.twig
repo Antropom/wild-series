@@ -8,14 +8,17 @@
         <h2>{{ episode.title }}</h2>
         <p>{{ episode.synopsis }}</p>
         {% if episode.comments %}
-        <ul>
-            {% for comment in episode.comments %}
-            <li>
-                <p>{{ comment.comment }}</p>
-                <p>{{ comment.rate }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+            <ul>
+                {% for comment in episode.comments %}
+                    <li>
+                        <p>{{ comment.comment }}</p>
+                        <p>{{ comment.rate }}</p>
+                    </li>
+                    {% if is_granted("ROLE_ADMIN") or app.user is same as(comment.author) %}
+                        {{ include('program/_delete_comment_form.html.twig', [comment]) }}
+                    {% endif %}
+                {% endfor %}
+            </ul>
         {% endif %}
     </div>
     {% if app.user %}
