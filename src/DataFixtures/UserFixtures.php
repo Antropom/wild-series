@@ -27,6 +27,7 @@ class UserFixtures extends Fixture
         ));
 
         $manager->persist($contributor);
+        $this->setReference('user_1', $contributor);
 
         $admin = new User();
         $admin->setEmail('admin@monsite.com');
@@ -37,6 +38,8 @@ class UserFixtures extends Fixture
         ));
 
         $manager->persist($admin);
+        $this->setReference('user_2', $admin);
+
 
         $manager->flush();
     }
