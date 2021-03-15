@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Mon profile
+{% endblock %}
+
+{% block body %}
+    <div class="row justify-content-center">
+        <div>
+            <h1>Mon profile</h1>
+            <h2>{{ app.user.email }}</h2>
+        </div>
+    </div>
+{% endblock %}
+
+

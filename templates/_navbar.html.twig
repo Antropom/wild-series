@@ -34,10 +34,10 @@
             </li>
         </ul>
         {% if app.user %}
-            {{ app.user.email }}
-            <a href="{{ path('app_logout') }}"> Se déconnecter</a>
+            <a class="nav-link text-black-50" href="{{ path('app_profile') }}">{{ app.user.email }}</a>
+            <a class="nav-link text-black-50" href="{{ path('app_logout') }}"> Se déconnecter</a>
         {% else %}
-            <a href="{{ path('app_login') }}"> Se connecter</a>
+            <a class="nav-link text-black-50" href="{{ path('app_login') }}"> Se connecter</a>
         {% endif %}
     </div>
 </nav>
