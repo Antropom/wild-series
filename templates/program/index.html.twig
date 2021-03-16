@@ -3,18 +3,36 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <div class="p-3">
-        <h1>Toutes les séries de la table program : </h1>
-        {% for program in programs %}
-            <div>
-                <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-                <p>{{ program.summary }}</p>
-                <a href="{{ path("program_show", { slug: program.slug }) }}">Voir la fiche</a>
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="mt-2 col-4 offset-6">
+                {{ include('program/_form.html.twig', {'button_label': 'Search'}) }}
             </div>
-        {% else %}
-            Aucune série trouvée.
-        {% endfor %}
-        <a href="{{ path('program_new') }}">Ajouter une série</a>
-        <a href="{{ path('app_index') }}">Retour à l'accueil</a>
+
+            <div class="col-10">
+                <h1>Les séries</h1>
+                {% for program in programs %}
+                    <div class="mt-4 card">
+                        <div class="card-body">
+                            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+                            <p class="text-justify">{{ program.summary }}</p>
+                            <button type="button" class="btn btn-success">
+                                <a class="text-white" href="{{ path("program_show", { slug: program.slug }) }}">Voir la
+                                    fiche</a>
+                            </button>
+                        </div>
+                    </div>
+                {% else %}
+                    Aucune série trouvée.
+                {% endfor %}
+                <button type="button" class="mt-2 btn btn-success offset-8">
+                    <a class="text-white" href="{{ path('program_new') }}">Ajouter une série</a>
+                </button>
+                <button type="button" class="mt-2 btn btn-success">
+                    <a class="text-white" href="{{ path('app_index') }}">Retour à l'accueil</a>
+                </button>
+            </div>
+        </div>
     </div>
 {% endblock %}
