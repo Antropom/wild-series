@@ -29,6 +29,7 @@ class ProgramController extends AbstractController
     /**
      * @Route("/", name="index")
      * @param Request $request
+     * @param ProgramRepository $programRepository
      * @return Response
      */
     public function index(Request $request, ProgramRepository $programRepository): Response
@@ -38,7 +39,7 @@ class ProgramController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $search = $form->getData()['search'];
-            $programs = $programRepository->findBy(['title' => $search]);
+            $programs = $programRepository->findLikeName($search);
         } else {
             $programs = $programRepository->findAll();
         }
