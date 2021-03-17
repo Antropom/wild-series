@@ -9,7 +9,14 @@
             <img class="align-self-start mr-3" src="{{ program.poster }}" alt="{{ program.title }} poster">
         {% endif %}
         <div class="media-body">
+            <div class="row">
             <h1 class="mt-0">{{ program.title }}</h1>
+            {% if app.user %}
+                <a id="watchlist" class="pl-2 align-self-center" href="{{ path('program_watchlist', {id: program.id})}}">
+                    <i class="{{ app.user.isInWatchlist(program) ? 'fas' : 'far' }} fa-heart"></i>
+                </a>
+            {% endif %}
+            </div>
             <p>{{ program.summary }}</p>
             <p>Catégorie : {{ program.category.name }}</p>
             <strong>Acteurs :</strong>
