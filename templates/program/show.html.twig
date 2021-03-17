@@ -28,10 +28,14 @@
     </div>
 
     {% if is_granted("ROLE_ADMIN") or app.user is same as(program.owner) %}
-    <a href="{{ path('program_edit', {slug: program.slug}) }}">Modifier</a>
+        <button type="button" class="btn btn-success">
+            <a class="text-white" href="{{ path('program_edit', {slug: program.slug}) }}">Modifier</a>
+        </button>
     {% endif %}
-    <a href="{{ path('program_index') }}">
-        Retour à la liste des programmes
-    </a>
+    <button type="button" class="btn btn-success">
+        <a class="text-white" href="{{ path('program_index') }}">
+            Retour à la liste des programmes
+        </a>
+    </button>
 
 {% endblock %}

@@ -62,6 +62,7 @@ class ProgramController extends AbstractController
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
@@ -81,6 +82,8 @@ class ProgramController extends AbstractController
             } catch (TransportExceptionInterface $e) {
                 error_log($e);
             }
+
+            $this->addFlash('success', 'Une nouvelle série a été créée');
 
             return $this->redirectToRoute('program_index');
         }
@@ -177,6 +180,8 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', 'La série a bien été modifiée');
+
             return $this->redirectToRoute('program_index');
         }
 
@@ -198,6 +203,8 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($program);
             $entityManager->flush();
+
+            $this->addFlash('danger', 'La série a bien été supprimée');
         }
 
         return $this->redirectToRoute('program_index');

@@ -18,6 +18,13 @@
 		<link rel="icon" type="image/png" href="{{ asset('build/favicon-96x96.png')}}"/>
 	</head>
 	<body>
+		{% for category, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ category }}">
+					{{ message }}
+				</div>
+			{% endfor %}
+		{% endfor %}
 		{% block body %}{% endblock %}
 	</body>
 </html>
